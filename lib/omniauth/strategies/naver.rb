@@ -11,7 +11,7 @@ module OmniAuth
         :token_url => 'https://nid.naver.com/oauth2.0/token',
       }
 
-      uid { raw_properties['enc_id'].to_s }
+      uid { raw_properties['id'].to_s }
 
       info do
         {
@@ -29,6 +29,10 @@ module OmniAuth
       private
 
       def gender
+        if raw_properties['gener'].nil?
+          return nil
+        end
+
         return 'male' if raw_properties['gender'].include? 'M'
         return 'female' if raw_properties['gender'].include? 'F'
       end
